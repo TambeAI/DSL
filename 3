@@ -1,0 +1,240 @@
+1:
+import pandas as pd
+
+# Load dataset
+df = pd.read_csv("iris.csv")
+
+# Create categorical groups based on SepalLengthCm
+df['sepal_group'] = pd.cut(
+    df['SepalLengthCm'],
+    bins=3,
+    labels=["Low", "Medium", "High"]
+)
+
+# Group by categorical variable
+grouped = df.groupby('sepal_group')['PetalLengthCm']
+
+# Display statistics
+print("Mean:\n", grouped.mean())
+
+print("\nMedian:\n", grouped.median())
+
+print("\nMinimum:\n", grouped.min())
+
+print("\nMaximum:\n", grouped.max())
+
+print("\nStandard Deviation:\n", grouped.std())
+
+2:
+import pandas as pd 
+ 
+df = pd.read_csv("iris.csv") 
+ 
+grouped = df.groupby('Species') 
+ 
+for name, group in grouped: 
+    print("\n----- Species:", name, "-----") 
+     
+    print("\nMean:") 
+    print(group.mean(numeric_only=True)) 
+     
+    print("\nStandard Deviation:") 
+    print(group.std(numeric_only=True)) 
+     
+    print("\nPercentiles:") 
+    print(group.describe()) 
+
+
+
+
+
+
+
+================ FIRST PROGRAM EXPLANATION ================
+
+1. import pandas as pd
+Imports the pandas library.
+Pandas is used for:
+- reading datasets
+- data analysis
+- data manipulation
+
+2. df = pd.read_csv("iris.csv")
+Reads the iris.csv dataset and stores it into DataFrame df.
+
+3. df['sepal_group'] = pd.cut(...)
+Creates categorical groups from the numerical column SepalLengthCm.
+
+Purpose:
+Convert continuous numerical data into categories.
+
+4. bins=3
+Divides SepalLengthCm into 3 intervals/groups.
+
+5. labels=["Low", "Medium", "High"]
+Assigns names to the intervals:
+- Low
+- Medium
+- High
+
+Example:
+Small sepal lengths -> Low
+Medium sepal lengths -> Medium
+Large sepal lengths -> High
+
+6. grouped = df.groupby('sepal_group')['PetalLengthCm']
+Groups PetalLengthCm values according to sepal_group categories.
+
+Meaning:
+Petal lengths are analyzed separately for:
+- Low sepal group
+- Medium sepal group
+- High sepal group
+
+7. grouped.mean()
+Calculates average PetalLengthCm for each sepal group.
+
+Mean Formula:
+Sum of values / Number of values
+
+8. grouped.median()
+Calculates median PetalLengthCm for each group.
+
+Median:
+Middle value after sorting data.
+
+9. grouped.min()
+Finds minimum PetalLengthCm in each group.
+
+10. grouped.max()
+Finds maximum PetalLengthCm in each group.
+
+11. grouped.std()
+Calculates standard deviation for each group.
+
+Standard Deviation:
+Measures spread or variability of data.
+
+Low std:
+Data close together.
+
+High std:
+Data widely spread.
+
+12. Final Purpose of First Program
+This program performs grouped statistical analysis by converting numerical data into categories and calculating summary statistics for each category.
+
+
+
+================ SECOND PROGRAM EXPLANATION ================
+
+1. import pandas as pd
+Imports pandas library.
+
+2. df = pd.read_csv("iris.csv")
+Loads Iris dataset into DataFrame df.
+
+3. grouped = df.groupby('Species')
+Groups dataset according to flower species.
+
+Groups created:
+- Iris-setosa
+- Iris-versicolor
+- Iris-virginica
+
+4. for name, group in grouped:
+Loops through each species group separately.
+
+name:
+Species name.
+
+group:
+Data belonging to that species.
+
+5. print("\n----- Species:", name, "-----")
+Displays species name before statistics.
+
+6. group.mean(numeric_only=True)
+Calculates mean of all numerical columns for that species.
+
+numeric_only=True:
+Calculates mean only for numeric columns.
+
+7. group.std(numeric_only=True)
+Calculates standard deviation for numerical columns.
+
+Purpose:
+Measure variability in flower measurements.
+
+8. group.describe()
+Provides complete statistical summary.
+
+describe() calculates:
+- count
+- mean
+- std
+- min
+- 25%
+- 50%
+- 75%
+- max
+
+9. Percentiles
+25%:
+First quartile
+
+50%:
+Median
+
+75%:
+Third quartile
+
+10. Final Purpose of Second Program
+This program performs statistical analysis separately for each flower species in the Iris dataset.
+
+It helps compare:
+- average measurements
+- spread of data
+- minimum and maximum values
+- percentiles
+between different species.
+
+
+
+================ IMPORTANT ORAL EXAM POINTS ================
+
+groupby():
+Used to divide dataset into groups based on categorical variables.
+
+pd.cut():
+Used to convert continuous numerical data into categories.
+
+mean():
+Average value.
+
+median():
+Middle value.
+
+min():
+Smallest value.
+
+max():
+Largest value.
+
+std():
+Standard deviation (spread of data).
+
+describe():
+Complete statistical summary.
+
+Percentiles:
+25% -> First Quartile
+50% -> Median
+75% -> Third Quartile
+
+
+
+================ FINAL CONCLUSION ================
+
+These programs perform grouped statistical analysis on the Iris dataset using pandas.
+They help analyze and compare numerical features across different categories and species.
