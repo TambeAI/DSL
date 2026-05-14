@@ -171,3 +171,243 @@ df['Attendance_Log'] = np.log(df['Attendance'])
 # Final Dataset
 print("\n----- FINAL DATASET -----")
 print(df.head())
+
+
+
+
+
+
+explantion:
+1. import pandas as pd
+This imports the pandas library.
+Pandas is used for:
+- data handling
+- data analysis
+- creating DataFrames
+
+2. import numpy as np
+This imports the NumPy library.
+NumPy is used for:
+- numerical calculations
+- random number generation
+- mathematical operations
+
+3. import matplotlib.pyplot as plt
+This imports Matplotlib for data visualization and plotting graphs.
+
+4. np.random.seed(42)
+Sets a fixed random seed.
+It ensures the same random values are generated every time the program runs.
+
+5. n = 100
+Defines the number of student records.
+The dataset will contain 100 rows.
+
+6. data = pd.DataFrame({...})
+Creates the Academic Performance dataset.
+
+Columns created:
+- Student_ID
+- Gender
+- Study_Hours
+- Attendance
+- Midterm_Score
+- Final_Score
+- Assignments_Avg
+
+7. np.random.choice(["Male", "Female"], n)
+Randomly assigns Male or Female to students.
+
+8. np.random.normal(5, 2, n)
+Generates Study_Hours using normal distribution.
+
+Parameters:
+- 5 = mean
+- 2 = standard deviation
+- n = number of values
+
+Similarly:
+Attendance:
+mean = 85
+std = 10
+
+Midterm_Score:
+mean = 70
+std = 15
+
+Final_Score:
+mean = 75
+std = 12
+
+Assignments_Avg:
+mean = 80
+std = 10
+
+9. data.loc[5, "Study_Hours"] = np.nan
+Introduces a missing value in Study_Hours.
+
+np.nan means:
+Missing/Null value.
+
+10. data.loc[10, "Midterm_Score"] = np.nan
+Introduces missing value in Midterm_Score.
+
+11. data.loc[15, "Attendance"] = 150
+Creates inconsistency because attendance cannot exceed 100.
+
+12. data.loc[20, "Final_Score"] = -10
+Creates inconsistency because marks cannot be negative.
+
+13. data.loc[25, "Study_Hours"] = 20
+Introduces outlier in Study_Hours.
+
+14. data.loc[30, "Midterm_Score"] = 200
+Introduces outlier in Midterm_Score.
+
+15. print(data)
+Displays the generated dataset.
+
+16. df = pd.DataFrame(data)
+Creates a DataFrame named df from data.
+
+17. print(df.isnull().sum())
+Checks missing values column-wise.
+
+isnull():
+Checks missing values.
+
+sum():
+Counts total missing values.
+
+18. fillna(df['Study_Hours'].mean())
+Replaces missing Study_Hours with mean value.
+
+Why mean?
+Because Study_Hours is numerical data.
+
+19. fillna(df['Midterm_Score'].mean())
+Replaces missing Midterm_Score with mean.
+
+20. df['Attendance'].apply(lambda x: 100 if x > 100 else x)
+Handles inconsistency in Attendance.
+
+Logic:
+If attendance > 100:
+replace with 100
+otherwise keep original value.
+
+21. lambda function
+A small anonymous function used for quick operations.
+
+Syntax:
+lambda parameter : expression
+
+22. df['Final_Score'].apply(lambda x: np.nan if x < 0 else x)
+If Final_Score is negative:
+replace with missing value (NaN).
+
+23. fillna(df['Final_Score'].mean())
+Replaces missing Final_Score with mean value.
+
+24. df['Midterm_Score'].apply(lambda x: 100 if x > 100 else x)
+If Midterm_Score exceeds 100:
+replace with 100.
+
+25. plt.figure(figsize=(10,8))
+Creates plotting area.
+
+figsize:
+- width = 10
+- height = 8
+
+26. plt.subplot(2,2,1)
+Creates subplot grid.
+
+Meaning:
+2 rows
+2 columns
+1st graph position
+
+27. plt.boxplot(df['Study_Hours'])
+Creates boxplot for Study_Hours.
+
+Purpose of boxplot:
+- detect outliers
+- understand spread
+- show median and quartiles
+
+28. plt.title('Study Hours')
+Adds title to graph.
+
+29. plt.tight_layout()
+Adjusts spacing between plots.
+
+30. plt.show()
+Displays all graphs.
+
+31. numeric_cols = [...]
+Stores numerical column names in a list.
+
+32. Q1 = df[col].quantile(0.25)
+Calculates first quartile (25%).
+
+33. Q3 = df[col].quantile(0.75)
+Calculates third quartile (75%).
+
+34. IQR = Q3 - Q1
+Calculates Interquartile Range.
+
+IQR Full Form:
+Interquartile Range
+
+Formula:
+IQR = Q3 - Q1
+
+35. lower_bound = Q1 - 1.5 * IQR
+Calculates lower limit for outlier detection.
+
+36. upper_bound = Q3 + 1.5 * IQR
+Calculates upper limit for outlier detection.
+
+37. median_val = df[col].median()
+Calculates median value of column.
+
+38. np.where(condition, value_if_true, value_if_false)
+Checks condition and replaces values accordingly.
+
+39. Replace Upper Outliers
+If value > upper_bound:
+replace with median.
+
+40. Replace Lower Outliers
+If value < lower_bound:
+replace with median.
+
+41. Boxplots After Handling Outliers
+Graphs are recreated to compare before and after outlier treatment.
+
+42. df['Attendance_Log'] = np.log(df['Attendance'])
+Applies Log Transformation on Attendance.
+
+Purpose:
+- reduce skewness
+- normalize data
+- reduce large value impact
+
+43. np.log()
+Calculates natural logarithm.
+
+44. print(df.head())
+Displays final cleaned dataset.
+
+Final Conclusion:
+This program performs complete data preprocessing on an Academic Performance dataset.
+
+Operations performed:
+- dataset creation
+- missing value handling
+- inconsistency correction
+- outlier detection and treatment
+- boxplot visualization
+- log transformation
+- final cleaned dataset generation
