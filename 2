@@ -1,0 +1,173 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Set random seed
+np.random.seed(42)
+
+# Number of records
+n = 100
+
+# Create Dataset
+data = pd.DataFrame({
+    "Student_ID": range(1, n + 1),
+    "Gender": np.random.choice(["Male", "Female"], n),
+    "Study_Hours": np.random.normal(5, 2, n),
+    "Attendance": np.random.normal(85, 10, n),
+    "Midterm_Score": np.random.normal(70, 15, n),
+    "Final_Score": np.random.normal(75, 12, n),
+    "Assignments_Avg": np.random.normal(80, 10, n)
+})
+
+# Introduce Missing Values
+data.loc[5, "Study_Hours"] = np.nan
+data.loc[10, "Midterm_Score"] = np.nan
+
+# Introduce Inconsistencies
+data.loc[15, "Attendance"] = 150
+data.loc[20, "Final_Score"] = -10
+
+# Introduce Outliers
+data.loc[25, "Study_Hours"] = 20
+data.loc[30, "Midterm_Score"] = 200
+#data
+print(data)
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Check Missing Values
+print("----- MISSING VALUES -----")
+print(df.isnull().sum())
+
+# Handle Missing Values
+df['Study_Hours'] = df['Study_Hours'].fillna(df['Study_Hours'].mean())
+df['Midterm_Score'] = df['Midterm_Score'].fillna(df['Midterm_Score'].mean())
+
+print("\n----- AFTER HANDLING NULL VALUES -----")
+print(df.isnull().sum())
+
+# Handle Inconsistencies
+
+# Attendance should not exceed 100
+df['Attendance'] = df['Attendance'].apply(
+    lambda x: 100 if x > 100 else x
+)
+
+# Final Score should not be negative
+df['Final_Score'] = df['Final_Score'].apply(
+    lambda x: np.nan if x < 0 else x
+)
+
+# Fill missing Final Score
+df['Final_Score'] = df['Final_Score'].fillna(
+    df['Final_Score'].mean()
+)
+
+# Midterm Score should not exceed 100
+df['Midterm_Score'] = df['Midterm_Score'].apply(
+    lambda x: 100 if x > 100 else x
+)
+
+print("\n----- CLEANED DATA -----")
+print(df.head())
+
+# Boxplots Before Handling Outliers
+
+plt.figure(figsize=(10, 8))
+
+# Study Hours
+plt.subplot(2, 2, 1)
+plt.boxplot(df['Study_Hours'])
+plt.title('Study Hours')
+
+# Midterm Score
+plt.subplot(2, 2, 2)
+plt.boxplot(df['Midterm_Score'])
+plt.title('Midterm Score')
+
+# Final Score
+plt.subplot(2, 2, 3)
+plt.boxplot(df['Final_Score'])
+plt.title('Final Score')
+
+# Attendance
+plt.subplot(2, 2, 4)
+plt.boxplot(df['Attendance'])
+plt.title('Attendance')
+
+plt.tight_layout()
+plt.show()
+
+# Handle Outliers Using IQR Method
+
+numeric_cols = [
+    'Study_Hours',
+    'Midterm_Score',
+    'Final_Score',
+    'Assignments_Avg',
+    'Attendance'
+]
+
+for col in numeric_cols:
+
+    # Calculate Quartiles
+    Q1 = df[col].quantile(0.25)
+    Q3 = df[col].quantile(0.75)
+
+    # Calculate IQR
+    IQR = Q3 - Q1
+
+    # Calculate Bounds
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    # Find Median
+    median_val = df[col].median()
+
+    # Replace Upper Outliers
+    df[col] = np.where(
+        df[col] > upper_bound,
+        median_val,
+        df[col]
+    )
+
+    # Replace Lower Outliers
+    df[col] = np.where(
+        df[col] < lower_bound,
+        median_val,
+        df[col]
+    )
+
+# Boxplots After Handling Outliers
+
+plt.figure(figsize=(10, 8))
+
+# Study Hours
+plt.subplot(2, 2, 1)
+plt.boxplot(df['Study_Hours'])
+plt.title('Study Hours')
+
+# Midterm Score
+plt.subplot(2, 2, 2)
+plt.boxplot(df['Midterm_Score'])
+plt.title('Midterm Score')
+
+# Final Score
+plt.subplot(2, 2, 3)
+plt.boxplot(df['Final_Score'])
+plt.title('Final Score')
+
+# Attendance
+plt.subplot(2, 2, 4)
+plt.boxplot(df['Attendance'])
+plt.title('Attendance')
+
+plt.tight_layout()
+plt.show()
+
+# Log Transformation
+df['Attendance_Log'] = np.log(df['Attendance'])
+
+# Final Dataset
+print("\n----- FINAL DATASET -----")
+print(df.head())
