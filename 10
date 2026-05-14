@@ -1,0 +1,459 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# -------------------- LOAD DATASET --------------------
+df = sns.load_dataset("iris")
+
+# -------------------- DATA PREVIEW --------------------
+print("========== DATA PREVIEW ==========")
+print(df.head())
+
+# -------------------- DATA TYPES --------------------
+print("\n========== FEATURES & DATA TYPES ==========")
+print(df.dtypes)
+
+print("\n========== HISTOGRAMS ==========")
+df.hist(figsize=(10,8))
+plt.suptitle("Histograms of Iris Features")
+plt.show()
+# =====================================================
+# BOXPLOTS WITH VALUES
+# =====================================================
+
+print("\n========== BOXPLOT VALUES ==========")
+
+for col in features:
+
+    print(f"\nFeature: {col}")
+    print("-" * 50)
+
+    # Group by species
+    grouped = df.groupby("species")[col]
+
+    for group_name, values in grouped:
+
+        minimum = values.min()
+        q1 = values.quantile(0.25)
+        median = values.median()
+        q3 = values.quantile(0.75)
+        maximum = values.max()
+
+        print(f"\nGroup: {group_name}")
+        print(f"Minimum Value : {minimum}")
+        print(f"Q1 (Box Start): {q1}")
+        print(f"Median        : {median}")
+        print(f"Q3 (Box End)  : {q3}")
+        print(f"Maximum Value : {maximum}")
+
+    # Draw boxplot
+    plt.figure(figsize=(6,4))
+    sns.boxplot(x="species", y=col, data=df)
+
+    plt.title(f"Boxplot of {col}")
+    plt.xlabel("Species")
+    plt.ylabel(col)
+
+    plt.show()
+
+# =====================================================
+# BASIC OBSERVATIONS
+# =====================================================
+
+print("\n========== OBSERVATIONS ==========")
+
+print("1. Sepal features show overlap between species.")
+print("2. Petal features clearly separate species.")
+print("3. Some outliers are present in sepal_width.")
+print("4. Petal length and width are important features.")
+print("5. Histograms show how data is distributed.")
+print("6. Boxplots show median, spread, and outliers.")
+
+
+
+
+
+
+
+
+
+
+================ IRIS DATA VISUALIZATION PROGRAM EXPLANATION ================
+
+1. import pandas as pd
+Imports pandas library.
+
+Purpose:
+- data analysis
+- dataset handling
+- tabular operations
+
+2. import seaborn as sns
+Imports seaborn library.
+
+Purpose:
+- statistical visualization
+- attractive graphs
+
+3. import matplotlib.pyplot as plt
+Imports matplotlib plotting library.
+
+Purpose:
+Used for plotting charts and graphs.
+
+
+
+================ LOAD DATASET ================
+
+4. df = sns.load_dataset("iris")
+Loads Iris dataset from seaborn.
+
+Iris dataset contains flower measurements.
+
+Columns:
+- sepal_length
+- sepal_width
+- petal_length
+- petal_width
+- species
+
+Species:
+- setosa
+- versicolor
+- virginica
+
+
+
+================ DATA PREVIEW ================
+
+5. print(df.head())
+
+Displays first 5 rows of dataset.
+
+Purpose:
+Quickly inspect data structure and values.
+
+
+
+================ DATA TYPES ================
+
+6. print(df.dtypes)
+
+Displays datatype of each column.
+
+Common datatypes:
+float64 -> decimal numbers
+object -> text/string values
+
+Example:
+species column:
+object datatype
+
+Feature columns:
+float64 datatype
+
+
+
+================ HISTOGRAMS ================
+
+7. df.hist(figsize=(10,8))
+
+Creates histograms for all numerical columns.
+
+Histogram:
+Graph showing frequency distribution of numerical data.
+
+Purpose:
+- understand distribution
+- detect skewness
+- detect spread
+- identify outliers
+
+8. figsize=(10,8)
+
+Sets graph size:
+- width = 10
+- height = 8
+
+9. plt.suptitle("Histograms of Iris Features")
+
+Adds main title to all histograms.
+
+10. plt.show()
+
+Displays histograms.
+
+
+
+================ HISTOGRAM UNDERSTANDING ================
+
+Histogram shows:
+- frequency/count
+- data distribution
+- skewness
+- concentration of values
+
+X-axis:
+Feature values
+
+Y-axis:
+Frequency/count
+
+If bars are centered:
+Normal distribution.
+
+If bars lean left/right:
+Skewed distribution.
+
+
+
+================ BOXPLOT VALUES ================
+
+11. for col in features:
+
+Loops through each numerical feature.
+
+Features include:
+- sepal_length
+- sepal_width
+- petal_length
+- petal_width
+
+12. grouped = df.groupby("species")[col]
+
+Groups selected feature according to species.
+
+Groups:
+- setosa
+- versicolor
+- virginica
+
+13. minimum = values.min()
+
+Finds minimum value.
+
+14. q1 = values.quantile(0.25)
+
+Calculates first quartile (25%).
+
+Meaning:
+25% values lie below this point.
+
+15. median = values.median()
+
+Calculates median.
+
+Meaning:
+Middle value of dataset.
+
+16. q3 = values.quantile(0.75)
+
+Calculates third quartile (75%).
+
+Meaning:
+75% values lie below this point.
+
+17. maximum = values.max()
+
+Finds maximum value.
+
+18. print(f"Group: {group_name}")
+
+Displays species name.
+
+19. print(f"Minimum Value : {minimum}")
+
+Displays smallest value.
+
+20. print(f"Q1 (Box Start): {q1}")
+
+Displays first quartile.
+
+21. print(f"Median : {median}")
+
+Displays median value.
+
+22. print(f"Q3 (Box End) : {q3}")
+
+Displays third quartile.
+
+23. print(f"Maximum Value : {maximum}")
+
+Displays largest value.
+
+
+
+================ BOXPLOT CREATION ================
+
+24. plt.figure(figsize=(6,4))
+
+Creates graph area.
+
+Size:
+- width = 6
+- height = 4
+
+25. sns.boxplot(x="species", y=col, data=df)
+
+Creates boxplot.
+
+x="species":
+Species categories on x-axis.
+
+y=col:
+Selected feature on y-axis.
+
+Purpose:
+Compare feature distribution among species.
+
+26. plt.title(f"Boxplot of {col}")
+
+Adds graph title.
+
+27. plt.xlabel("Species")
+
+Adds x-axis label.
+
+28. plt.ylabel(col)
+
+Adds y-axis label.
+
+29. plt.show()
+
+Displays boxplot.
+
+
+
+================ WHAT IS A BOXPLOT? ================
+
+Boxplot:
+Graph showing statistical distribution.
+
+Shows:
+- minimum value
+- Q1
+- median
+- Q3
+- maximum value
+- outliers
+
+Purpose:
+- compare distributions
+- detect outliers
+- understand spread
+
+
+
+================ PARTS OF BOXPLOT ================
+
+1. Minimum Value
+Smallest non-outlier value.
+
+2. Q1
+Beginning of box.
+
+3. Median
+Middle line inside box.
+
+4. Q3
+End of box.
+
+5. Maximum Value
+Largest non-outlier value.
+
+6. Whiskers
+Lines extending from box.
+
+7. Outliers
+Points outside whiskers.
+
+
+
+================ IMPORTANT STATISTICAL TERMS ================
+
+Quartiles:
+Values dividing data into 4 parts.
+
+Q1:
+25% of data below it.
+
+Median:
+50% of data below it.
+
+Q3:
+75% of data below it.
+
+IQR Full Form:
+Interquartile Range
+
+Formula:
+
+:contentReference[oaicite:0]{index=0}
+
+Purpose:
+Used for outlier detection.
+
+
+
+================ OBSERVATIONS EXPLAINED ================
+
+1. Sepal features show overlap between species.
+Sepal measurements are similar among species.
+
+2. Petal features clearly separate species.
+Petal measurements differ significantly.
+
+Meaning:
+Petal features are better for classification.
+
+3. Some outliers are present in sepal_width.
+Few unusual values appear outside whiskers.
+
+4. Petal length and width are important features.
+These features help distinguish species.
+
+5. Histograms show how data is distributed.
+They display frequency and spread.
+
+6. Boxplots show median, spread, and outliers.
+They summarize statistical distribution visually.
+
+
+
+================ IMPORTANT VISUALIZATION TERMS ================
+
+Histogram:
+Shows frequency distribution.
+
+Boxplot:
+Shows statistical summary.
+
+Seaborn:
+Advanced statistical plotting library.
+
+Matplotlib:
+Base plotting library.
+
+Outlier:
+Unusual/extreme value.
+
+Skewness:
+Asymmetry in distribution.
+
+
+
+================ FINAL CONCLUSION ================
+
+This program performs data visualization and statistical analysis on the Iris dataset.
+
+Operations performed:
+- dataset loading
+- histogram plotting
+- boxplot analysis
+- quartile calculation
+- species comparison
+- outlier detection
+- distribution analysis
+
+Purpose:
+Understand feature distribution and compare flower species visually.
