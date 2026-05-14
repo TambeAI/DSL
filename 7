@@ -1,0 +1,477 @@
+# ===================== NLP TEXT PREPROCESSING + TF-IDF =====================
+
+import nltk
+
+# -------------------- DOWNLOAD REQUIRED NLTK DATA --------------------
+
+nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('averaged_perceptron_tagger_eng')
+
+# -------------------- IMPORT LIBRARIES --------------------
+
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk import pos_tag
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# =====================================================================
+# PART 1 : TEXT PREPROCESSING
+# =====================================================================
+
+text = "Text analytics is the process of analyzing text data to extract useful information."
+
+print("========== TEXT PREPROCESSING ==========\n")
+
+# -------------------- ORIGINAL TEXT --------------------
+
+print("----- ORIGINAL TEXT -----")
+print(text)
+
+# -------------------- TOKENIZATION --------------------
+
+tokens = word_tokenize(text)
+
+print("\n----- TOKENS -----")
+print(tokens)
+
+# -------------------- POS TAGGING --------------------
+
+pos = pos_tag(tokens)
+
+print("\n----- POS TAGS -----")
+
+for word, tag in pos:
+    print(f"{word:<15} -> {tag}")
+
+# -------------------- STOPWORD REMOVAL --------------------
+
+stop_words = set(stopwords.words('english'))
+
+filtered = [word for word in tokens if word.lower() not in stop_words]
+
+print("\n----- AFTER STOPWORD REMOVAL -----")
+print(filtered)
+
+# -------------------- STEMMING --------------------
+
+stemmer = PorterStemmer()
+
+stemmed = [stemmer.stem(word) for word in filtered]
+
+print("\n----- STEMMED WORDS -----")
+print(stemmed)
+
+# -------------------- LEMMATIZATION --------------------
+
+lemmatizer = WordNetLemmatizer()
+
+lemmatized = [lemmatizer.lemmatize(word) for word in filtered]
+
+print("\n----- LEMMATIZED WORDS -----")
+print(lemmatized)
+
+# =====================================================================
+# PART 2 : TF-IDF REPRESENTATION
+# =====================================================================
+
+documents = [
+    "Text analytics is useful",
+    "Text data analysis is important",
+    "Analytics helps extract information"
+]
+
+print("\n\n========== TF-IDF REPRESENTATION ==========\n")
+
+# -------------------- PRINT DOCUMENTS --------------------
+
+print("----- DOCUMENTS -----")
+
+for i, doc in enumerate(documents, 1):
+    print(f"Doc {i}: {doc}")
+
+# -------------------- CREATE TF-IDF VECTORIZER --------------------
+
+vectorizer = TfidfVectorizer()
+
+# -------------------- GENERATE TF-IDF MATRIX --------------------
+
+tfidf_matrix = vectorizer.fit_transform(documents)
+
+# -------------------- GET FEATURE NAMES --------------------
+
+features = vectorizer.get_feature_names_out()
+
+# -------------------- CONVERT MATRIX TO ARRAY --------------------
+
+matrix = tfidf_matrix.toarray()
+
+# -------------------- PRINT FEATURES --------------------
+
+print("\n----- FEATURE NAMES -----")
+print(features)
+
+# -------------------- PRINT TF-IDF MATRIX --------------------
+
+print("\n----- TF-IDF MATRIX -----")
+print("Rows = Documents")
+print("Columns = Words\n")
+
+for i in range(len(matrix)):
+
+    print(f"Doc {i+1}:\n")
+
+    for j in range(len(features)):
+        print(f"{features[j]:<15} : {matrix[i][j]:.3f}")
+
+    print()
+
+
+
+
+
+
+
+
+================ NLP TEXT PREPROCESSING + TF-IDF PROGRAM EXPLANATION ================
+
+1. import nltk
+Imports NLTK library.
+
+NLTK Full Form:
+Natural Language Toolkit
+
+Purpose:
+Used for Natural Language Processing (NLP).
+
+
+
+================ DOWNLOAD REQUIRED NLTK DATA ================
+
+2. nltk.download('punkt')
+Downloads tokenizer model.
+
+Purpose:
+Used for word tokenization.
+
+3. nltk.download('punkt_tab')
+Downloads additional tokenizer data.
+
+4. nltk.download('stopwords')
+Downloads stopword dataset.
+
+Stopwords:
+Common words like:
+- is
+- the
+- and
+- to
+
+5. nltk.download('wordnet')
+Downloads WordNet dictionary.
+
+Purpose:
+Used for lemmatization.
+
+6. nltk.download('averaged_perceptron_tagger')
+Downloads POS tagging model.
+
+7. nltk.download('averaged_perceptron_tagger_eng')
+Downloads English POS tagging data.
+
+
+
+================ IMPORT NLP LIBRARIES ================
+
+8. from nltk.tokenize import word_tokenize
+Imports tokenizer function.
+
+Purpose:
+Splits sentence into words/tokens.
+
+9. from nltk.corpus import stopwords
+Imports stopwords dataset.
+
+10. from nltk.stem import PorterStemmer, WordNetLemmatizer
+Imports:
+- stemming tool
+- lemmatization tool
+
+11. from nltk import pos_tag
+Imports POS tagging function.
+
+POS Full Form:
+Part Of Speech
+
+12. from sklearn.feature_extraction.text import TfidfVectorizer
+Imports TF-IDF vectorizer.
+
+Purpose:
+Converts text into numerical representation.
+
+
+
+================ PART 1 : TEXT PREPROCESSING ================
+
+13. text = "Text analytics is the process of analyzing text data to extract useful information."
+Stores input sentence into variable text.
+
+14. print(text)
+Displays original text.
+
+Output:
+Text analytics is the process of analyzing text data to extract useful information.
+
+
+
+================ TOKENIZATION ================
+
+15. tokens = word_tokenize(text)
+Splits sentence into individual words.
+
+Output Example:
+['Text', 'analytics', 'is', 'the', 'process', ...]
+
+Each word is called a token.
+
+Purpose:
+Break sentence into smaller units.
+
+
+
+================ POS TAGGING ================
+
+16. pos = pos_tag(tokens)
+Assigns grammatical tags to words.
+
+Example:
+Text       -> NN
+analytics  -> NNS
+is         -> VBZ
+
+17. Common POS Tags
+
+NN  -> Noun
+NNS -> Plural Noun
+VB  -> Verb
+VBD -> Verb Past Tense
+VBZ -> Verb Present
+JJ  -> Adjective
+DT  -> Determiner
+
+Example:
+the -> DT
+
+18. print(f"{word:<15} -> {tag}")
+
+<15:
+Allocates 15 character spaces for alignment.
+
+Example:
+Text            -> NN
+analytics       -> NNS
+
+Purpose:
+Makes output properly formatted.
+
+
+
+================ STOPWORD REMOVAL ================
+
+19. stop_words = set(stopwords.words('english'))
+Loads English stopwords.
+
+20. filtered = [word for word in tokens if word.lower() not in stop_words]
+Removes stopwords from tokens.
+
+Purpose:
+Keep meaningful words only.
+
+Before:
+Text analytics is the process of analyzing text data
+
+After:
+['Text', 'analytics', 'process', 'analyzing', 'text', 'data', ...]
+
+
+
+================ STEMMING ================
+
+21. stemmer = PorterStemmer()
+Creates stemming object.
+
+22. stemmed = [stemmer.stem(word) for word in filtered]
+Reduces words to root forms.
+
+Examples:
+analyzing -> analyz
+useful -> use
+
+Purpose:
+Reduce words to basic form.
+
+Note:
+Stemmed words may not be grammatically correct.
+
+
+
+================ LEMMATIZATION ================
+
+23. lemmatizer = WordNetLemmatizer()
+Creates lemmatizer object.
+
+24. lemmatized = [lemmatizer.lemmatize(word) for word in filtered]
+Converts words into meaningful root words.
+
+Examples:
+running -> run
+cars -> car
+
+Difference:
+Lemmatization gives meaningful dictionary words.
+Stemming may produce incomplete roots.
+
+
+
+================ PART 2 : TF-IDF REPRESENTATION ================
+
+25. documents = [...]
+Creates list of text documents.
+
+Three documents are used.
+
+26. vectorizer = TfidfVectorizer()
+Creates TF-IDF vectorizer object.
+
+TF-IDF:
+Term Frequency - Inverse Document Frequency
+
+Purpose:
+Convert text into numerical values.
+
+27. tfidf_matrix = vectorizer.fit_transform(documents)
+
+fit():
+Learns vocabulary from documents.
+
+transform():
+Converts text into TF-IDF matrix.
+
+28. features = vectorizer.get_feature_names_out()
+Extracts unique words/features from documents.
+
+Example:
+['analysis', 'analytics', 'data', 'extract', ...]
+
+Features:
+Unique words present in all documents.
+
+29. matrix = tfidf_matrix.toarray()
+Converts sparse matrix into normal array.
+
+Purpose:
+Easy printing and viewing.
+
+
+
+================ TF-IDF CONCEPT ================
+
+30. TF (Term Frequency)
+Measures how frequently a word appears in a document.
+
+Formula:
+
+:contentReference[oaicite:0]{index=0}
+
+31. IDF (Inverse Document Frequency)
+Measures importance of word.
+
+Formula:
+
+:contentReference[oaicite:1]{index=1}
+
+Purpose of log:
+- reduces very large values
+- smoothens scaling
+
+32. TF-IDF Formula
+
+:contentReference[oaicite:2]{index=2}
+
+High TF-IDF:
+Word is important in that document.
+
+Low TF-IDF:
+Word is common across documents.
+
+
+
+================ PRINTING TF-IDF MATRIX ================
+
+33. for i in range(len(matrix))
+Loops through each document.
+
+34. for j in range(len(features))
+Loops through each feature/word.
+
+35. print(f"{features[j]:<15} : {matrix[i][j]:.3f}")
+
+<15:
+Allocates 15 spaces for alignment.
+
+:.3f:
+Displays floating-point value with 3 decimal places.
+
+Example:
+0.605
+
+
+
+================ IMPORTANT NLP TERMS ================
+
+NLP:
+Natural Language Processing
+
+Tokenization:
+Breaking text into words/tokens.
+
+POS Tagging:
+Assigning grammatical tags.
+
+Stopwords:
+Common words removed during preprocessing.
+
+Stemming:
+Reducing words to root forms.
+
+Lemmatization:
+Converting words to meaningful dictionary forms.
+
+TF:
+Term Frequency
+
+IDF:
+Inverse Document Frequency
+
+TF-IDF:
+Importance score of words.
+
+
+
+================ FINAL CONCLUSION ================
+
+This program performs:
+- text preprocessing
+- tokenization
+- POS tagging
+- stopword removal
+- stemming
+- lemmatization
+- TF-IDF representation
+
+It converts raw text into cleaned and numerical format for NLP and Machine Learning applications.
