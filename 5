@@ -1,0 +1,307 @@
+import pandas as pd 
+from sklearn.model_selection import train_test_split 
+from sklearn.linear_model import LogisticRegression 
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score 
+# Load dataset 
+data = pd.read_csv("Social_Network_Ads.csv") 
+# Features and target 
+X = data[['Age', 'EstimatedSalary']] 
+y = data['Purchased'] 
+# Split data 
+X_train, X_test, y_train, y_test = train_test_split( 
+X, y, test_size=0.25, random_state=0 
+) 
+# Train model 
+model = LogisticRegression() 
+model.fit(X_train, y_train) 
+# Predict 
+y_pred = model.predict(X_test) 
+# Confusion Matrix 
+cm = confusion_matrix(y_test, y_pred) 
+TN, FP, FN, TP = cm.ravel() 
+print("Confusion Matrix:") 
+print(cm) 
+# Metrics 
+accuracy = accuracy_score(y_test, y_pred) 
+precision = precision_score(y_test, y_pred) 
+recall = recall_score(y_test, y_pred) 
+error_rate = 1 - accuracy 
+# Output 
+print("\nValues:") 
+print("TP:", TP) 
+print("FP:", FP) 
+print("TN:", TN) 
+print("FN:", FN) 
+print("\nPerformance Metrics:") 
+print("Accuracy:", accuracy) 
+print("Error Rate:", error_rate) 
+print("Precision:", precision) 
+print("Recall:", recall)
+
+
+
+
+
+
+================ PROGRAM EXPLANATION ================
+
+1. import pandas as pd
+Imports pandas library.
+
+Purpose:
+- read dataset
+- analyze data
+- manipulate tables
+
+2. from sklearn.model_selection import train_test_split
+Imports train_test_split function.
+
+Purpose:
+Split dataset into:
+- training data
+- testing data
+
+3. from sklearn.linear_model import LogisticRegression
+Imports Logistic Regression model.
+
+Purpose:
+Used for classification problems.
+
+4. from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+Imports evaluation metrics.
+
+confusion_matrix:
+Shows prediction results.
+
+accuracy_score:
+Calculates accuracy.
+
+precision_score:
+Calculates precision.
+
+recall_score:
+Calculates recall.
+
+5. data = pd.read_csv("Social_Network_Ads.csv")
+Reads Social Network Ads dataset.
+
+Dataset contains:
+- Age
+- EstimatedSalary
+- Purchased
+
+6. X = data[['Age', 'EstimatedSalary']]
+Creates independent variables/features.
+
+Features used:
+- Age
+- EstimatedSalary
+
+These are input variables.
+
+7. y = data['Purchased']
+Creates dependent variable/target variable.
+
+Purchased:
+0 -> Product not purchased
+1 -> Product purchased
+
+8. train_test_split(...)
+Splits dataset into training and testing data.
+
+Parameters:
+test_size=0.25:
+25% data used for testing.
+
+75% data used for training.
+
+random_state=0:
+Ensures same data split every run.
+
+9. model = LogisticRegression()
+Creates Logistic Regression model object.
+
+Logistic Regression:
+Used for binary classification problems.
+
+Binary Classification:
+Only two outputs:
+0 or 1
+
+10. model.fit(X_train, y_train)
+Trains the model.
+
+fit():
+Model learns relationship between:
+- Age
+- Salary
+- Purchased status
+
+11. y_pred = model.predict(X_test)
+Predicts Purchased values for test data.
+
+Output:
+0 or 1
+
+12. cm = confusion_matrix(y_test, y_pred)
+Creates confusion matrix.
+
+Purpose:
+Compare actual vs predicted values.
+
+Confusion Matrix Structure:
+
+                Predicted
+                0      1
+Actual 0       TN     FP
+Actual 1       FN     TP
+
+13. TN, FP, FN, TP = cm.ravel()
+ravel():
+Converts confusion matrix into 1D array.
+
+Extracts:
+TN -> True Negative
+FP -> False Positive
+FN -> False Negative
+TP -> True Positive
+
+14. True Negative (TN)
+Model correctly predicted:
+Not Purchased.
+
+15. False Positive (FP)
+Model predicted Purchased,
+but actually Not Purchased.
+
+16. False Negative (FN)
+Model predicted Not Purchased,
+but actually Purchased.
+
+17. True Positive (TP)
+Model correctly predicted Purchased.
+
+18. accuracy_score(y_test, y_pred)
+Calculates accuracy.
+
+Formula:
+
+:contentReference[oaicite:0]{index=0}
+
+Meaning:
+Percentage of correct predictions.
+
+19. error_rate = 1 - accuracy
+Calculates error rate.
+
+Formula:
+
+:contentReference[oaicite:1]{index=1}
+
+Meaning:
+Percentage of incorrect predictions.
+
+20. precision_score(y_test, y_pred)
+Calculates precision.
+
+Formula:
+
+:contentReference[oaicite:2]{index=2}
+
+Meaning:
+Out of predicted positive values,
+how many were actually positive.
+
+21. recall_score(y_test, y_pred)
+Calculates recall.
+
+Formula:
+
+:contentReference[oaicite:3]{index=3}
+
+Meaning:
+Out of actual positive values,
+how many were correctly predicted.
+
+22. print("TP:", TP)
+Displays True Positives.
+
+23. print("FP:", FP)
+Displays False Positives.
+
+24. print("TN:", TN)
+Displays True Negatives.
+
+25. print("FN:", FN)
+Displays False Negatives.
+
+26. Performance Metrics
+Displays:
+- Accuracy
+- Error Rate
+- Precision
+- Recall
+
+
+
+================ IMPORTANT MACHINE LEARNING TERMS ================
+
+Independent Variables:
+Input features used for prediction.
+
+Here:
+- Age
+- EstimatedSalary
+
+Dependent Variable:
+Output variable.
+
+Here:
+Purchased
+
+Classification:
+Predicting categories/classes.
+
+Binary Classification:
+Two possible outputs:
+0 or 1
+
+Logistic Regression:
+Classification algorithm used for binary outputs.
+
+
+
+================ ABOUT LOGISTIC REGRESSION ================
+
+Logistic Regression predicts probability of a class.
+
+Uses sigmoid function:
+
+:contentReference[oaicite:4]{index=4}
+
+Output range:
+0 to 1
+
+If probability > 0.5:
+predict 1
+
+Else:
+predict 0
+
+
+
+================ FINAL CONCLUSION ================
+
+This program builds a Logistic Regression classification model using Social Network Ads dataset.
+
+Operations performed:
+- dataset loading
+- feature selection
+- train-test splitting
+- model training
+- prediction
+- confusion matrix generation
+- accuracy calculation
+- precision calculation
+- recall calculation
+- error rate calculation
