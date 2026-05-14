@@ -1,0 +1,327 @@
+import pandas as pd 
+from sklearn.model_selection import train_test_split 
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score 
+# Load dataset (make sure iris.csv is in same folder) 
+data = pd.read_csv("iris.csv") 
+print(data.head()) 
+X = data.iloc[:, :-1]   # all columns except last 
+y = data.iloc[:, -1]    # last column (target) 
+X_train, X_test, y_train, y_test = train_test_split( 
+X, y, test_size=0.25, random_state=42 
+) 
+model = GaussianNB() 
+model.fit(X_train, y_train) 
+y_pred = model.predict(X_test) 
+print("Predictions:", y_pred) 
+cm = confusion_matrix(y_test, y_pred) 
+print("\nConfusion Matrix:\n", cm) 
+accuracy = accuracy_score(y_test, y_pred) 
+precision = precision_score(y_test, y_pred, average='macro') 
+recall = recall_score(y_test, y_pred, average='macro') 
+error_rate = 1 - accuracy 
+print("\nAccuracy:", accuracy) 
+print("Error Rate:", error_rate) 
+print("Precision:", precision) 
+print("Recall:", recall) 
+
+
+
+
+
+================ PROGRAM EXPLANATION ================
+
+1. import pandas as pd
+Imports pandas library.
+
+Purpose:
+- read dataset
+- manipulate data
+- perform analysis
+
+2. from sklearn.model_selection import train_test_split
+Imports train_test_split function.
+
+Purpose:
+Split dataset into:
+- training data
+- testing data
+
+3. from sklearn.naive_bayes import GaussianNB
+Imports Gaussian Naive Bayes model.
+
+Purpose:
+Used for classification problems.
+
+4. from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+Imports evaluation metrics.
+
+confusion_matrix:
+Displays prediction results.
+
+accuracy_score:
+Calculates accuracy.
+
+precision_score:
+Calculates precision.
+
+recall_score:
+Calculates recall.
+
+5. data = pd.read_csv("iris.csv")
+Reads Iris dataset and stores it into DataFrame data.
+
+Iris dataset contains flower measurements.
+
+Columns usually include:
+- Sepal Length
+- Sepal Width
+- Petal Length
+- Petal Width
+- Species
+
+6. print(data.head())
+Displays first 5 rows of dataset.
+
+Purpose:
+Quickly inspect dataset structure.
+
+7. X = data.iloc[:, :-1]
+Creates independent variables/features.
+
+iloc:
+Integer-location based indexing.
+
+[:, :-1]
+Meaning:
+- all rows
+- all columns except last
+
+Features selected:
+- Sepal Length
+- Sepal Width
+- Petal Length
+- Petal Width
+
+8. y = data.iloc[:, -1]
+Creates dependent variable/target variable.
+
+[:, -1]
+Meaning:
+- all rows
+- last column
+
+Target column:
+Species
+
+Possible outputs:
+- Iris-setosa
+- Iris-versicolor
+- Iris-virginica
+
+9. train_test_split(...)
+Splits dataset into training and testing data.
+
+Parameters:
+test_size=0.25:
+25% data used for testing.
+
+75% data used for training.
+
+random_state=42:
+Ensures same random split every run.
+
+10. model = GaussianNB()
+Creates Gaussian Naive Bayes model.
+
+Naive Bayes:
+Probabilistic classification algorithm.
+
+Gaussian:
+Assumes numerical data follows normal distribution.
+
+11. model.fit(X_train, y_train)
+Trains the model.
+
+fit():
+Model learns relationship between:
+- flower measurements
+- species
+
+12. y_pred = model.predict(X_test)
+Predicts species for testing data.
+
+Output:
+Flower species predictions.
+
+13. print("Predictions:", y_pred)
+Displays predicted flower species.
+
+Example:
+- Iris-setosa
+- Iris-versicolor
+- Iris-virginica
+
+14. cm = confusion_matrix(y_test, y_pred)
+Creates confusion matrix.
+
+Purpose:
+Compare actual vs predicted values.
+
+For multiclass classification,
+matrix becomes larger.
+
+Example:
+
+                Predicted
+              S   V   VG
+Actual S     10  0   0
+Actual V      1 12   1
+Actual VG     0  1  13
+
+S  -> Setosa
+V  -> Versicolor
+VG -> Virginica
+
+Diagonal values:
+Correct predictions.
+
+15. print("\nConfusion Matrix:\n", cm)
+Displays confusion matrix.
+
+16. accuracy_score(y_test, y_pred)
+Calculates accuracy.
+
+Formula:
+
+:contentReference[oaicite:0]{index=0}
+
+Meaning:
+Percentage of correctly predicted samples.
+
+17. precision_score(y_test, y_pred, average='macro')
+Calculates precision.
+
+average='macro':
+Calculates precision separately for each class,
+then takes average.
+
+Formula:
+
+:contentReference[oaicite:1]{index=1}
+
+Meaning:
+Out of predicted positives,
+how many were correct.
+
+18. recall_score(y_test, y_pred, average='macro')
+Calculates recall.
+
+average='macro':
+Calculates recall for each class separately,
+then averages them.
+
+Formula:
+
+:contentReference[oaicite:2]{index=2}
+
+Meaning:
+Out of actual positives,
+how many were correctly predicted.
+
+19. error_rate = 1 - accuracy
+Calculates error rate.
+
+Formula:
+
+:contentReference[oaicite:3]{index=3}
+
+Meaning:
+Percentage of incorrect predictions.
+
+20. print("\nAccuracy:", accuracy)
+Displays model accuracy.
+
+21. print("Error Rate:", error_rate)
+Displays prediction error rate.
+
+22. print("Precision:", precision)
+Displays precision score.
+
+23. print("Recall:", recall)
+Displays recall score.
+
+
+
+================ IMPORTANT MACHINE LEARNING TERMS ================
+
+Independent Variables:
+Input features used for prediction.
+
+Here:
+- Sepal Length
+- Sepal Width
+- Petal Length
+- Petal Width
+
+Dependent Variable:
+Target/output variable.
+
+Here:
+Species
+
+Classification:
+Predicting categories/classes.
+
+Multiclass Classification:
+More than two output classes.
+
+Here:
+3 flower species.
+
+
+
+================ ABOUT GAUSSIAN NAIVE BAYES ================
+
+Naive Bayes:
+Classification algorithm based on probability.
+
+Uses Bayes Theorem:
+
+
+::contentReference[oaicite:4]{index=4}
+
+
+Gaussian Naive Bayes assumes:
+Numerical data follows normal distribution.
+
+It calculates probability for each class
+and predicts the class with highest probability.
+
+
+
+================ ABOUT average='macro' ================
+
+average='macro':
+- calculates metric for each class separately
+- computes average equally
+
+Used in multiclass classification.
+
+
+
+================ FINAL CONCLUSION ================
+
+This program builds a Gaussian Naive Bayes classification model using the Iris dataset.
+
+Operations performed:
+- dataset loading
+- feature selection
+- train-test splitting
+- model training
+- prediction
+- confusion matrix generation
+- accuracy calculation
+- precision calculation
+- recall calculation
+- error rate calculation
