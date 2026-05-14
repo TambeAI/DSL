@@ -1,0 +1,280 @@
+import seaborn as sns 
+import matplotlib.pyplot as plt 
+# Load dataset 
+df = sns.load_dataset("titanic") 
+print("----- DATA PREVIEW -----") 
+print(df.head()) 
+print("\n----- DATA INFO -----") 
+print(df.info()) 
+# Count plot (Survival) 
+sns.countplot(x="survived", data=df) 
+plt.title("Survival Count") 
+plt.show() 
+# Count plot (Gender vs Survival) 
+sns.countplot(x="sex", hue="survived", data=df) 
+plt.title("Survival based on Gender") 
+plt.show() 
+# Count plot (Class vs Survival) 
+sns.countplot(x="pclass", hue="survived", data=df) 
+plt.title("Survival based on Passenger Class") 
+plt.show() 
+# Histogram of fare 
+sns.histplot(df["fare"], bins=30, kde=True) 
+plt.title("Fare Distribution") 
+plt.xlabel("Fare") 
+plt.ylabel("Count") 
+plt.show()
+#Kernel Density Estimation
+
+
+
+
+
+================ TITANIC DATA VISUALIZATION PROGRAM EXPLANATION ================
+
+1. import seaborn as sns
+Imports Seaborn library.
+
+Purpose:
+- statistical visualization
+- attractive graphs
+- easier plotting
+
+sns:
+Short name for seaborn.
+
+2. import matplotlib.pyplot as plt
+Imports Matplotlib plotting library.
+
+Purpose:
+Used for creating graphs and charts.
+
+
+
+================ LOAD DATASET ================
+
+3. df = sns.load_dataset("titanic")
+Loads Titanic dataset from seaborn.
+
+Titanic Dataset:
+Contains passenger information such as:
+- age
+- gender
+- class
+- fare
+- survival status
+
+4. print(df.head())
+Displays first 5 rows of dataset.
+
+Purpose:
+Quickly inspect data.
+
+5. print(df.info())
+Displays dataset information.
+
+info() shows:
+- total rows
+- columns
+- datatypes
+- missing values
+
+
+
+================ COUNT PLOT : SURVIVAL ================
+
+6. sns.countplot(x="survived", data=df)
+
+Creates count plot for survival.
+
+x="survived":
+Uses survived column on x-axis.
+
+Values:
+0 -> Did not survive
+1 -> Survived
+
+Purpose:
+Count number of passengers who survived and did not survive.
+
+7. plt.title("Survival Count")
+Adds graph title.
+
+8. plt.show()
+Displays graph.
+
+
+
+================ COUNT PLOT : GENDER VS SURVIVAL ================
+
+9. sns.countplot(x="sex", hue="survived", data=df)
+
+Creates grouped count plot.
+
+x="sex":
+Gender categories on x-axis.
+
+Values:
+- male
+- female
+
+hue="survived":
+Adds survival categories with different colors.
+
+Purpose:
+Compare survival counts between males and females.
+
+Observation:
+Females survived more than males.
+
+
+
+================ COUNT PLOT : CLASS VS SURVIVAL ================
+
+10. sns.countplot(x="pclass", hue="survived", data=df)
+
+Creates count plot based on passenger class.
+
+pclass:
+Passenger class.
+
+Values:
+1 -> First class
+2 -> Second class
+3 -> Third class
+
+Purpose:
+Compare survival based on passenger class.
+
+Observation:
+First-class passengers had higher survival rates.
+
+
+
+================ HISTOGRAM ================
+
+11. sns.histplot(df["fare"], bins=30, kde=True)
+
+Creates histogram of fare values.
+
+fare:
+Ticket price paid by passengers.
+
+Purpose:
+Understand fare distribution.
+
+12. bins=30
+
+Bins:
+Intervals/groups in histogram.
+
+Meaning:
+Data is divided into 30 bars.
+
+More bins:
+Detailed graph.
+
+Fewer bins:
+Simpler graph.
+
+13. kde=True
+
+KDE Full Form:
+Kernel Density Estimation
+
+Purpose:
+Adds smooth density curve over histogram.
+
+Helps visualize:
+- distribution shape
+- skewness
+- data concentration
+
+14. plt.title("Fare Distribution")
+Adds graph title.
+
+15. plt.xlabel("Fare")
+Adds x-axis label.
+
+16. plt.ylabel("Count")
+Adds y-axis label.
+
+17. plt.show()
+Displays histogram.
+
+
+
+================ IMPORTANT PLOT TYPES ================
+
+1. Count Plot
+Used for:
+- categorical data
+- frequency/count comparison
+
+Example:
+- gender counts
+- survival counts
+
+2. Histogram
+Used for:
+- numerical data distribution
+- frequency analysis
+
+3. KDE Plot
+Used for:
+- smooth probability distribution
+- understanding data density
+
+4. Seaborn
+High-level visualization library.
+Provides attractive statistical plots.
+
+5. Matplotlib
+Base plotting library.
+Provides detailed graph customization.
+
+
+
+================ ABOUT KDE (Kernel Density Estimation) ================
+
+KDE creates a smooth curve representing data distribution.
+
+Purpose:
+- identify skewness
+- identify peaks
+- understand data spread
+
+Without KDE:
+Only bars shown.
+
+With KDE:
+Smooth curve also shown.
+
+
+
+================ IMPORTANT DATA ANALYSIS OBSERVATIONS ================
+
+1. Females had higher survival rate than males.
+
+2. First-class passengers survived more.
+
+3. Fare distribution is right-skewed.
+
+4. Most passengers paid lower fares.
+
+5. Some passengers paid extremely high fares (outliers).
+
+
+
+================ FINAL CONCLUSION ================
+
+This program performs data visualization on the Titanic dataset using Seaborn and Matplotlib.
+
+Graphs used:
+- count plot
+- grouped count plot
+- histogram
+- KDE plot
+
+Purpose:
+Understand survival patterns, passenger class impact, and fare distribution.
