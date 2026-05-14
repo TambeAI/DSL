@@ -1,0 +1,370 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load dataset
+df = sns.load_dataset("titanic")
+
+# Print actual boxplot values
+grouped = df.groupby(["sex", "survived"])["age"]
+
+print("\n===== BOX PLOT VALUES =====\n")
+
+for name, group in grouped:
+    
+    q1 = group.quantile(0.25)
+    median = group.quantile(0.50)
+    q3 = group.quantile(0.75)
+    minimum = group.min()
+    maximum = group.max()
+
+    print(f"Group: {name}")
+    print(f"Minimum Value : {minimum}")
+    print(f"Q1 (Box Start): {q1}")
+    print(f"Median        : {median}")
+    print(f"Q3 (Box End)  : {q3}")
+    print(f"Maximum Value : {maximum}")
+    print("-" * 40)
+
+# Create graph
+plt.figure(figsize=(10,6))
+
+sns.boxplot(
+    x="sex",
+    y="age",
+    hue="survived",
+    data=df
+)
+
+plt.title("Age Distribution by Gender and Survival")
+plt.xlabel("Gender")
+plt.ylabel("Age")
+
+plt.show()
+print("\n========== OBSERVATIONS ==========") 
+print("1. Females have higher survival rate than males.") 
+print("2. Children (lower age) have higher survival chances.") 
+print("3. Male age distribution is wider than females.") 
+print("4. Older passengers have lower survival rate.") 
+print("5. Some outliers are present in age.")
+
+
+
+
+
+
+
+
+================ TITANIC BOXPLOT PROGRAM EXPLANATION ================
+
+1. import pandas as pd
+Imports pandas library.
+
+Purpose:
+- data analysis
+- handling tables/datasets
+
+2. import seaborn as sns
+Imports seaborn library.
+
+Purpose:
+- statistical visualization
+- attractive plots
+
+3. import matplotlib.pyplot as plt
+Imports matplotlib plotting library.
+
+Purpose:
+Used for graph creation and customization.
+
+
+
+================ LOAD DATASET ================
+
+4. df = sns.load_dataset("titanic")
+Loads Titanic dataset from seaborn.
+
+Dataset contains:
+- age
+- gender
+- class
+- fare
+- survival status
+
+5. grouped = df.groupby(["sex", "survived"])["age"]
+
+groupby():
+Groups dataset according to:
+- gender
+- survival status
+
+["age"]:
+Selects age column for analysis.
+
+Groups created:
+- Male Survived
+- Male Not Survived
+- Female Survived
+- Female Not Survived
+
+
+
+================ BOXPLOT VALUES ================
+
+6. for name, group in grouped:
+Loops through each group separately.
+
+name:
+Group name.
+
+group:
+Age values of that group.
+
+7. q1 = group.quantile(0.25)
+
+Calculates first quartile (Q1).
+
+Meaning:
+25% data lies below this value.
+
+Q1:
+Beginning of box.
+
+8. median = group.quantile(0.50)
+
+Calculates median.
+
+Meaning:
+Middle value of dataset.
+
+50% data lies below median.
+
+Median:
+Middle line inside boxplot.
+
+9. q3 = group.quantile(0.75)
+
+Calculates third quartile (Q3).
+
+Meaning:
+75% data lies below this value.
+
+Q3:
+End of box.
+
+10. minimum = group.min()
+
+Finds minimum age value.
+
+11. maximum = group.max()
+
+Finds maximum age value.
+
+12. print(f"Group: {name}")
+
+Displays group name.
+
+Example:
+('male', 0)
+
+Meaning:
+male passengers who did not survive.
+
+13. print("-" * 40)
+
+Prints separator line for readability.
+
+
+
+================ BOXPLOT CREATION ================
+
+14. plt.figure(figsize=(10,6))
+
+Creates graph area.
+
+figsize:
+- width = 10
+- height = 6
+
+15. sns.boxplot(...)
+
+Creates boxplot.
+
+16. x="sex"
+
+Gender shown on x-axis.
+
+Categories:
+- male
+- female
+
+17. y="age"
+
+Age shown on y-axis.
+
+18. hue="survived"
+
+Separates data using survival status.
+
+Values:
+0 -> Not survived
+1 -> Survived
+
+Different colors represent survival groups.
+
+19. data=df
+
+Uses Titanic dataset.
+
+20. plt.title("Age Distribution by Gender and Survival")
+
+Adds graph title.
+
+21. plt.xlabel("Gender")
+
+Adds x-axis label.
+
+22. plt.ylabel("Age")
+
+Adds y-axis label.
+
+23. plt.show()
+
+Displays graph.
+
+
+
+================ WHAT IS A BOXPLOT? ================
+
+Boxplot:
+Graph used to visualize numerical data distribution.
+
+It shows:
+- minimum value
+- maximum value
+- median
+- quartiles
+- outliers
+
+Purpose:
+- detect outliers
+- understand spread
+- compare distributions
+
+
+
+================ PARTS OF BOXPLOT ================
+
+1. Minimum Value
+Smallest non-outlier value.
+
+2. Q1 (25%)
+Start of box.
+
+3. Median (50%)
+Middle line inside box.
+
+4. Q3 (75%)
+End of box.
+
+5. Maximum Value
+Largest non-outlier value.
+
+6. Whiskers
+Lines extending from box.
+
+Show spread of data.
+
+7. Outliers
+Points outside whiskers.
+
+Usually unusually large/small values.
+
+
+
+================ IMPORTANT STATISTICAL TERMS ================
+
+Quartiles:
+Values dividing data into 4 parts.
+
+Q1:
+25% data below it.
+
+Q2:
+Median (50%).
+
+Q3:
+75% data below it.
+
+IQR Full Form:
+Interquartile Range
+
+Formula:
+
+:contentReference[oaicite:0]{index=0}
+
+Purpose:
+Used for outlier detection.
+
+
+
+================ OUTLIER DETECTION ================
+
+Outliers are detected using:
+
+Lower Bound:
+
+:contentReference[oaicite:1]{index=1}
+
+Upper Bound:
+
+:contentReference[oaicite:2]{index=2}
+
+Values outside bounds are considered outliers.
+
+
+
+================ OBSERVATIONS EXPLAINED ================
+
+1. Females have higher survival rate than males.
+More female survivors visible in plot.
+
+2. Children have higher survival chances.
+Lower age values appear more among survivors.
+
+3. Male age distribution is wider.
+Male boxplots are taller/wider.
+
+Meaning:
+Male ages vary more.
+
+4. Older passengers have lower survival rate.
+Older ages mostly appear in non-survivor groups.
+
+5. Some outliers are present in age.
+Few very high or unusual ages appear as dots.
+
+
+
+================ WHY BOXPLOT IS IMPORTANT ================
+
+Purpose of boxplot:
+- detect outliers
+- compare groups
+- understand spread
+- identify skewness
+- visualize quartiles
+- analyze distribution quickly
+
+
+
+================ FINAL CONCLUSION ================
+
+This program performs boxplot analysis on Titanic dataset.
+
+It:
+- groups passengers by gender and survival
+- calculates quartiles and median
+- visualizes age distribution
+- identifies outliers
+- compares survival patterns using boxplots
