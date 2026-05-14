@@ -22,3 +22,94 @@ print("\n----- DATA TYPES -----")
 print(df.dtypes) 
 print("\n----- VALUE COUNTS -----")
 print(df["Species"].value_counts())
+
+
+
+
+1. import pandas as pd
+This statement imports the pandas library and gives it the alias pd.
+Pandas is used for reading, analyzing, and manipulating datasets.
+
+2. df = pd.read_csv("iris.csv")
+read_csv() is used to read the iris.csv file.
+The dataset is stored inside a DataFrame named df.
+
+3. print(df.head())
+head() displays the first 5 rows of the dataset.
+It helps quickly inspect the dataset structure.
+
+4. print(df.tail())
+tail() displays the last 5 rows of the dataset.
+
+5. print(df.shape)
+shape returns the dimensions of the dataset.
+It gives:
+(number of rows, number of columns)
+
+Example:
+(150, 5)
+means:
+150 rows and 5 columns.
+
+6. print(df.isnull().sum())
+isnull() checks for missing values.
+sum() counts the total missing values column-wise.
+
+7. print(df.isnull())
+Displays True/False values:
+True  -> missing value exists
+False -> value exists
+
+8. print(df.describe())
+describe() provides statistical summary of numerical columns.
+
+It calculates:
+- count
+- mean
+- standard deviation
+- minimum value
+- maximum value
+- quartiles (25%, 50%, 75%)
+
+9. df.info()
+info() displays complete dataset information:
+- total rows
+- total columns
+- data types
+- non-null values
+- memory usage
+
+10. print(df.columns)
+columns returns all column names of the dataset.
+
+11. print(df.index)
+index displays row index values of the dataset.
+
+12. print(df.dtypes)
+dtypes shows the datatype of every column.
+
+Common datatypes:
+float64 -> decimal numbers
+object  -> string/text values
+
+13. print(df["Species"].value_counts())
+value_counts() counts occurrences of each unique category in the Species column.
+
+Example:
+Iris-setosa       50
+Iris-versicolor   50
+Iris-virginica    50
+
+Meaning:
+Each species appears 50 times in the dataset.
+
+Final Conclusion:
+This program performs Exploratory Data Analysis (EDA) on the Iris dataset using pandas.
+It helps understand dataset structure, missing values, statistical summary, datatypes, and category distribution.
+"Mean " (x ˉ )=(∑x)/n Average of all observations.
+"Median"=((n+1)/2)^th " valueMiddle value of ordered data." 
+Mode is the value that appears most frequently.
+Q_1=((n+1)/4)^th " value 25%" 
+Q_2=((n+1)/2)^th " value 50%" 
+Q_3=((3(n+1))/4)^th " value 75%" 
+σ=√((∑(x-x ˉ)^2)/n)  std=Measure of spread of data from mean.
